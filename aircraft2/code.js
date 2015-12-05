@@ -7,20 +7,6 @@
     
     global.UAM.aircrafts = [];
     
-    //////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////// Sample aircraft with sample service  /////////////// 
-    
-    // global.UAM.aircrafts.push({
-    //     code: 'SP-ABC',
-    //     services: []
-    // });
-    
-    // global.UAM.aircrafts[0].services.push({
-    //     name: 'smth1',
-    //     timeToExecute: 120
-    // });
-    
-    //////////////////////////////////////////////////////////////////////////////////////
     global.UAM.notAdded = function(name) {
         for(var i = 0; i< global.UAM.aircrafts.length; i++){
             if (global.UAM.aircrafts[i].code === name) {
@@ -62,8 +48,17 @@
     global.UAM.reduceTimeToExecute = function(aircraftObj, time) {
         var index = global.UAM.aircrafts.indexOf(aircraftObj);
         if (index > -1 && global.UAM.aircrafts[index].services) {
-            for (i in global.UAM.aircrafts[index].services) {
+            for (var i = 0; i < global.UAM.aircrafts[index].services.length; i++) {
                 global.UAM.aircrafts[index].services[i].timeToExecute -= time;
+            };
+            var i = 0;
+            while(i < global.UAM.aircrafts[index].services.length) {
+                if(global.UAM.aircrafts[index].services[i].timeToExecute <= 0) {
+                    global.UAM.aircrafts[index].services.splice(i, 1);
+                }
+                else{
+                    i++;
+                }
             };
         };     
         // !!!

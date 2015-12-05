@@ -119,18 +119,26 @@
     }
 
     repairAircrafts = function(){
-        // name = document.querySelector('#name_repair');
-        time = document.querySelector('#ime_repair');
+        time = document.querySelector('#time_repair').value;
         repairAllMatchingAircrafts(time);
     }
 
     repair = function(aircraft, time) {
-        global.UAM.reduceTimeToExecute(aircraftObj, time);
+        global.UAM.reduceTimeToExecute(aircraft, time);
+        var services = document.querySelector('#services_aircraft_' + aircraft.code);
+        services.innerHTML = "";
+        for (i in aircraft.services) {
+            var serTime = aircraft.services[i].timeToExecute;
+            var serName = aircraft.services[i].name;
+            var service = createServiceELement(serName, serTime);
+            services.appendChild(service)
+        };
+
     }
 
     repairAllMatchingAircrafts = function (time) {
      var aircraftsToRepair = global.UAM.getAircraftsForRepairs(time);
-     for (var i = 0; i < aircraftsToRepair; i ++){
+     for (var i = 0; i < aircraftsToRepair.length; i ++){
         repair(aircraftsToRepair[i], time);
      }
     }
